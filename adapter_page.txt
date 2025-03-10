@@ -1,0 +1,57 @@
+package com.example.sqllite_test_2
+
+import android.content.Context
+import android.content.Intent
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Button
+import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
+
+class adapter(val lm:List<Model_filr> , context: Context):RecyclerView.Adapter<adapter.dbadapter>()
+{
+    class dbadapter(itemView: View):RecyclerView.ViewHolder(itemView)
+    {
+        val v1:TextView = itemView.findViewById(R.id.fid)
+        val v2:TextView = itemView.findViewById(R.id.ffname)
+        val v3:TextView = itemView.findViewById(R.id.femail)
+        val v4:TextView = itemView.findViewById(R.id.fage)
+        val v5:TextView = itemView.findViewById(R.id.fgender)
+        val v6:TextView = itemView.findViewById(R.id.fdept)
+        val b1:Button = itemView.findViewById(R.id.upd)
+
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): dbadapter {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.card ,parent,false )
+        return dbadapter(view)
+    }
+
+    override fun getItemCount(): Int {
+        return lm.size
+    }
+
+    override fun onBindViewHolder(holder: dbadapter, position: Int) {
+       val kl = lm[position]
+        holder.v1.text = kl.id.toString()
+        holder.v2.text = kl.name
+        holder.v3.text = kl.email
+        holder.v4.text = kl.age.toString()
+        holder.v5.text = kl.gender
+        holder.v6.text = kl.department
+        holder.b1.setOnClickListener {
+            val im = Intent(holder.itemView.context , update_data::class.java)
+            im.putExtra("id",kl.id)
+            im.putExtra("name",kl.name)
+            im.putExtra("email",kl.email)
+            im.putExtra("age",kl.age)
+            im.putExtra("gen",kl.gender)
+            im.putExtra("dept",kl.department)
+            holder.itemView.context.startActivity(im)
+
+        }
+
+
+    }
+}

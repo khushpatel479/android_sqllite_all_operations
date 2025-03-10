@@ -1,0 +1,10 @@
+package com.example.sqllite_test_2
+
+data class Model_filr(
+    val id:Int = 0,
+    val name:String,
+    val email:String,
+    val age:Int,
+    val gender:String,
+    val department:String
+)

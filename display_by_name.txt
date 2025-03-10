@@ -1,0 +1,32 @@
+package com.example.sqllite_test_2
+
+import android.os.Bundle
+import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+
+class display_name : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        setContentView(R.layout.activity_display_name)
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
+        val rc2:RecyclerView = findViewById(R.id.rc2)
+        val db = dbhelper(this)
+        val adp:adapter
+
+        rc2.layoutManager = LinearLayoutManager(this)
+        val name = intent.getStringExtra("name").toString()
+        val bn = db.find(name)
+        adp = adapter(bn,this)
+        rc2.adapter = adp
+
+    }
+}

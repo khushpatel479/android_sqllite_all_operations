@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="4dp"
+    app:strokeWidth="1dp"
+    app:strokeColor="@color/teal_700">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:orientation="vertical">
+
+        <!-- Title -->
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Information Of Employee"
+            android:textColor="@color/black"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+        <!-- Field 1 -->
+        <TextView
+            android:id="@+id/fid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Field 1"
+            android:textSize="20sp"
+
+            android:textColor="@color/black"/>
+
+        <!-- Field 2 -->
+        <TextView
+            android:id="@+id/ffname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Field 2"
+            android:textSize="20sp"
+            android:textColor="@color/black"/>
+
+        <!-- Field 3 -->
+        <TextView
+            android:id="@+id/femail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Field 3"
+            android:textSize="20sp"
+            android:textColor="@color/black"/>
+
+        <!-- Field 4 -->
+        <TextView
+            android:id="@+id/fage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Field 4"
+            android:textSize="20sp"
+            android:textColor="@color/black"/>
+
+        <!-- Field 5 -->
+        <TextView
+            android:id="@+id/fgender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Field 5"
+            android:textSize="20sp"
+            android:textColor="@color/black"/>
+
+        <!-- Field 6 -->
+        <TextView
+            android:id="@+id/fdept"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Field 6"
+            android:textSize="20sp"
+            android:textColor="@color/black"/>
+
+        <Button
+            android:id="@+id/upd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Update-Data" />
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

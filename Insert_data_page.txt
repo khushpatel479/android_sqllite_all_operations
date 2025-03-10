@@ -1,0 +1,77 @@
+Insert data page : 
+
+package com.example.sqllite_test_2
+
+import android.content.Intent
+import android.os.Bundle
+import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.EditText
+import android.widget.RadioButton
+import android.widget.RadioGroup
+import android.widget.Spinner
+import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+
+class insert_data : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        setContentView(R.layout.activity_insert_data)
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
+        val v1:EditText =  findViewById(R.id.name)
+        val v2:EditText = findViewById(R.id.email)
+        val v3:EditText = findViewById(R.id.age)
+        val arr = arrayOf("HR" , "EMPLOYEE" , "MANAGER" , "SUB-MANAGER")
+        val sp:Spinner = findViewById(R.id.dept)
+        val adp = ArrayAdapter(this,android.R.layout.simple_list_item_1,arr)
+        sp.adapter = adp
+        val rg1:RadioGroup = findViewById(R.id.rg1)
+        val ch1:RadioButton = findViewById(R.id.male)
+        val ch2:RadioButton = findViewById(R.id.fmale)
+        val b1:Button = findViewById(R.id.ins)
+        val b2:Button = findViewById(R.id.dis)
+        val b3:Button = findViewById(R.id.fg)
+        val db = dbhelper(this)
+        b1.setOnClickListener {
+            val name = v1.text.toString()
+            val email = v2.text.toString()
+            val age = v3.text.toString().toIntOrNull()?:0
+            var gen = ""
+            if(ch1.isChecked)
+            {
+                gen = "Male"
+            }
+            else
+            {
+                gen = "Female"
+            }
+            val dep = sp.selectedItem.toString()
+            val bn = Model_filr(0,name,email,age,gen,dep)
+            val res = db.insert(bn)
+            if(res)
+            {
+                Toast.makeText(this, "ok", Toast.LENGTH_SHORT).show()
+            }
+            else
+            {
+                Toast.makeText(this, "Sorry", Toast.LENGTH_SHORT).show()
+            }
+        }
+        b2.setOnClickListener {
+            val im = Intent(this,dis_data::class.java)
+            startActivity(im)
+        }
+        b3.setOnClickListener {
+            val mn = Intent(this,Find_name::class.java)
+            startActivity(mn)
+        }
+    }
+}

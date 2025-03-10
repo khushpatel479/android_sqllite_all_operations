@@ -1,0 +1,111 @@
+package com.example.sqllite_test_2
+
+import android.content.ContentValues
+import android.content.Context
+import android.database.Cursor
+import android.database.sqlite.SQLiteDatabase
+import android.database.sqlite.SQLiteOpenHelper
+
+class dbhelper(context: Context):SQLiteOpenHelper(context, dbname,null , dbversion)
+{
+    companion object{
+        val dbversion = 1
+        val COLLID = "id"
+        val tblname = "EMPP"
+        val COLLNAME = "name"
+        val COLLEMAIL = "email"
+        val COLLGENDER = "gender"
+        val dbname = "test4"
+        val COLLDEPARTMENT = "department"
+        val COLLAGE = "age"
+    }
+
+    override fun onCreate(db: SQLiteDatabase?) {
+        val create = """
+            CREATE TABLE $tblname($COLLID INTEGER PRIMARY KEY AUTOINCREMENT , $COLLNAME TEXT , $COLLEMAIL TEXT , $COLLAGE INTEGER , $COLLGENDER TEXT , $COLLDEPARTMENT TEXT)
+        """.trimIndent()
+        db?.execSQL(create)
+    }
+
+    override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
+        db?.execSQL("DROP TABLE IF EXISTS $tblname")
+        return onCreate(db)
+    }
+
+    fun insert(sl:Model_filr):Boolean
+    {
+        val db = writableDatabase
+        val values = ContentValues().apply {
+            put(COLLNAME , sl.name)
+            put(COLLEMAIL , sl.email)
+            put(COLLAGE , sl.age)
+            put(COLLGENDER , sl.gender)
+            put(COLLDEPARTMENT , sl.department)
+        }
+        val res = db.insert(tblname , null , values)
+        return res!=-1L
+    }
+    fun dis():List<Model_filr>
+    {
+        val emp = mutableListOf<Model_filr>()
+        val db = readableDatabase
+        val cursor = db.rawQuery("SELECT * FROM $tblname" , null)
+        if(cursor.moveToFirst())
+        {
+            do {
+                val ul = Model_filr(
+                    id = cursor.getInt(cursor.getColumnIndexOrThrow(COLLID)),
+                    name = cursor.getString(cursor.getColumnIndexOrThrow(COLLNAME)),
+                    email = cursor.getString(cursor.getColumnIndexOrThrow(COLLEMAIL)),
+                    age = cursor.getInt(cursor.getColumnIndexOrThrow(COLLAGE)),
+                    gender = cursor.getString(cursor.getColumnIndexOrThrow(COLLGENDER)),
+                    department = cursor.getString(cursor.getColumnIndexOrThrow(COLLDEPARTMENT))
+                )
+                emp.add(ul)
+            }while (cursor.moveToNext())
+        }
+        cursor.close()
+        db.close()
+        return emp
+    }
+    fun upd(em:Model_filr):Boolean
+    {
+        val db = writableDatabase
+        val values = ContentValues().apply {
+            put(COLLNAME, em.name)
+            put(COLLAGE , em.age)
+            put(COLLAGE , em.age)
+            put(COLLGENDER , em.gender)
+            put(COLLDEPARTMENT , em.department)
+        }
+        val res = db.update(tblname , values , "$COLLID = ?", arrayOf(em.id.toString()))
+        return res>0
+    }
+    fun find(name:String):List<Model_filr>
+    {
+        val db = readableDatabase
+        val sm = mutableListOf<Model_filr>()
+        val cursor = db.rawQuery("SELECT * FROM $tblname WHERE $COLLNAME = ?", arrayOf(name))
+        if(cursor.moveToFirst())
+        {
+            do {
+              val gm = Model_filr(
+                  id = cursor.getInt(cursor.getColumnIndexOrThrow(COLLID)),
+                  name = cursor.getString(cursor.getColumnIndexOrThrow(COLLNAME)),
+                  email = cursor.getString(cursor.getColumnIndexOrThrow(COLLEMAIL)),
+                  age = cursor.getInt(cursor.getColumnIndexOrThrow(COLLAGE)),
+                  gender = cursor.getString(cursor.getColumnIndexOrThrow(COLLGENDER)),
+                  department = cursor.getString(cursor.getColumnIndexOrThrow(COLLDEPARTMENT))
+              )
+                sm.add(gm)
+
+
+
+
+            }  while(cursor.moveToNext())
+        }
+        cursor.close()
+        db.close()
+        return sm
+    }
+}
